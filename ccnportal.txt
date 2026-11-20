@@ -1,0 +1,26 @@
+tbl_vendor_master -> v_code = tbl_lcsucn -> lvendr
+
+tbl_lcsucn -> lcnvdr = tbl_ccn_sales_dtl -> cslcss
+
+tbl_lcsucn -> lcnvdr = tbl_ccn_sales_srl -> srlcnv
+
+tbl_store_master -> strnum = tbl_ccn_sales_dtl -> cslloc
+
+tbl_store_master -> strnum = tbl_ccn_sales_srl -> srlnum
+
+tbl_ccn_sales_dtl -> cslcct = tbl_ccn_sales_srl -> srlcnn
+
+tbl_employee_master -> user_id = tbl_lcsecloc -> lcuseid //tbl_lcsecloc contains store codes accessible for each user (tbl_lcsecloc -> lcstor = tbl_store_master -> strnum)
+
+
+***to get serial number in sales report generation
+
+date range selected (from and to) should match
+tbl_ccn_sales_srl -> srlfmd and tbl_ccn_sales_srl -> srltod
+
+
+***processing sales report
+sales are generated grouped by location code, ccn vendor code and contract number
+tbl_ccn_sales_dtl		-> cslloc	-> cslcss		-> cslcct
+
+vendor can have multiple branch and per branch it can have multiple contract

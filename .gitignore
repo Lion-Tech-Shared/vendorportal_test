@@ -1,0 +1,20 @@
+# OS generated files
+Thumbs.db
+ehthumbs.db
+[Dd]esktop.ini
+.DS_Store
+
+# Editor & IDE files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Backup and temp files
+*~
+*.bak
+*.tmp
+*.swp
+
+# Log files
+*.log

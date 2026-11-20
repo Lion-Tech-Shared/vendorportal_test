@@ -1,0 +1,4 @@
+ 
+function alerts(){
+	alert("alerts");
+}

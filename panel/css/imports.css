@@ -1,0 +1,17 @@
+/*original css*/
+@import "../../css-main/bootstrap.mod.css";
+
+/*modified css*/
+@import "sb-admin-2.css";
+@import "../../font-awesome-4.2.0/css/font-awesome.min.css";
+
+/*loadmask*/
+@import "../../css-main/jquery.loadmask.css";
+
+/*plugins*/
+@import "../../css-main/plugins/metisMenu/metisMenu.min.css";
+@import "../../css-main/plugins/timeline.css";
+@import "../../css-main/plugins/morris.css";
+
+/*datatable*/
+@import "../../css-main/plugins/dataTables.bootstrap.css";

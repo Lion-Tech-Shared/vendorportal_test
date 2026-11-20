@@ -1,0 +1,79 @@
+body {
+	padding-top: 70px;
+	/*Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+}
+
+.banner-image {
+	background: url("images/header.jpg") no-repeat scroll center bottom / cover;
+	display: block;
+	-webkit-box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 1);
+	-moz-box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 1);
+	box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 1);
+}
+
+.banner-logo {
+	float: left;
+	/*background: url("images/header-object.png") no-repeat scroll center bottom / cover;
+	background-size: 100% auto;*/
+	width: 180px;
+	height: 150px;
+}
+
+.banner-logo-img {
+	 width: 100%;
+	 height: 100%;
+}
+
+.banner-title {
+	color: white;
+}
+
+.banner-sub-title {
+	margin-top: -10px;
+	padding-bottom: 30px;
+	color: yellow;
+}
+
+@media (min-width: 768px) {
+	.banner-image {
+		border-radius: 5px;
+	}
+}
+
+@media (max-width: 767px) {
+	.banner-image {
+		background-image: none;
+		background-color: #428BCA;
+		border-radius: 0;
+	}
+}
+
+@media (min-width: 451px) {
+	.banner-title {
+		padding-top: 30px;
+	}
+}
+
+@media (max-width: 450px) {
+	.banner-logo {
+		/*background: url("images/header-object.png") no-repeat scroll center top / cover;
+		background-size: 100px auto;*/
+		width: 100%;
+		height: 20%;
+		float: none;
+	}
+	
+	.banner-logo-img {
+		 width: 30%;
+		 height: 100%;
+	}
+	
+	.banner-image {
+		text-align: center;
+		padding-top: 0;
+	}
+	
+	.banner-sub-title {
+		padding-bottom: 10px;
+	}
+}
