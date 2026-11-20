@@ -1072,7 +1072,7 @@ class barcode
          
         for($i=0;$i<strlen($barnumber);$i++) 
         { 
-            $num=(int)$barnumber{$i}; 
+            $num=(int)$barnumber[$i]; 
             $str=""; 
             $str=str_replace("N","10",$encTable[$num]); 
             $str=str_replace("W",$widebar,$str); 
@@ -1222,7 +1222,7 @@ class barcode
 
         for($i=0;$i<strlen($barnumber);$i++) 
         { 
-            $num=(int)$barnumber{$i}; 
+            $num=(int)$barnumber[$i]; 
             $even=(substr($encTable[$checkdigit],$i,1)=='E'); 
             if(!$even) 
                 $mfcStr.=$leftOdd[$num]; 
@@ -1340,11 +1340,11 @@ class barcode
         { 
             if($i % 2 == 0 ) 
             { 
-                $csumTotal = $csumTotal + (3 * intval($barnumber{$i})); 
+                $csumTotal = $csumTotal + (3 * intval($barnumber[$i])); 
             } 
             else 
             { 
-                $csumTotal = $csumTotal + intval($barnumber{$i}); 
+                $csumTotal = $csumTotal + intval($barnumber[$i]); 
             } 
         } 
 
@@ -1392,7 +1392,7 @@ class barcode
          
         for($i=0;$i<strlen($barnumber);$i++) 
         { 
-            $num=(int)$barnumber{$i}; 
+            $num=(int)$barnumber[$i]; 
             if($i<4)  
             { 
                 $mfcStr.=$leftOdd[$num]; 
@@ -1497,11 +1497,11 @@ class barcode
         { 
             if($i % 2 == 0 ) 
             {         
-                $csumTotal = $csumTotal + intval($barnumber{$i}); 
+                $csumTotal = $csumTotal + intval($barnumber[$i]); 
             } 
             else 
             { 
-                $csumTotal = $csumTotal + (3 * intval($barnumber{$i})); 
+                $csumTotal = $csumTotal + (3 * intval($barnumber[$i])); 
             } 
         } 
 
@@ -1566,7 +1566,7 @@ class barcode
 
         for($i=1;$i<strlen($barnumber);$i++) 
         { 
-            $num=(int)$barnumber{$i}; 
+            $num=(int)$barnumber[$i]; 
             if($i<7)  
             { 
                 $even=(substr($encTable[$encbit],$i-1,1)==1); 
