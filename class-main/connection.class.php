@@ -4,7 +4,7 @@
     class getConnection{
      
       
-		private $host = "192.168.0.27";
+		private $host = "10.20.0.27";
 		private $db_name = "ccndb";
 		private $username = "ccn1";
 		private $password = "ccn1@dm1n";
