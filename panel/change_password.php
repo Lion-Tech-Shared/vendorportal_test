@@ -27,9 +27,9 @@
 
     <div class="container-fluid">
         <?PHP echo $designer->pageBelowHeader(); ?>    
-		<?PHP //echo $designer->pageSideBar(); ?>
+		<?PHP echo $designer->pageSideBar(); ?>
         
-        <div class="col-sm-12">
+        <div class="col-sm-9">
         	<!--<div class="row-cont">-->
 			<div class="panel panel-default" >            
 				<div class="panel-heading">

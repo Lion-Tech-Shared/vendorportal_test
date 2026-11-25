@@ -317,21 +317,22 @@
 					}
             	} catch (Throwable $e) {}
             //}
+			$out .= '<div class="col-sm-3 ">';
+
 			if(count($menu) > 0) {
-				$out.=	'<div class="col-sm-3 ">
-							<div class="sidebar-nav">
-								<div class="navbar navbar-default  " role="navigation">
-									<div class="navbar-header">
-										<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-navbar-collapse">
-											<span class="sr-only">Toggle navigation</span>
-											<span class="icon-bar"></span>
-											<span class="icon-bar"></span>
-											<span class="icon-bar"></span>
-										</button>
-										<span class="visible-xs navbar-brand">Panel Options</span>
-									</div>
-									<div class="navbar-collapse collapse sidebar-navbar-collapse">
-										<ul class="nav navbar-nav">';
+				$out.=	'<div class="sidebar-nav">
+							<div class="navbar navbar-default  " role="navigation">
+								<div class="navbar-header">
+									<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-navbar-collapse">
+										<span class="sr-only">Toggle navigation</span>
+										<span class="icon-bar"></span>
+										<span class="icon-bar"></span>
+										<span class="icon-bar"></span>
+									</button>
+									<span class="visible-xs navbar-brand">Panel Options</span>
+								</div>
+								<div class="navbar-collapse collapse sidebar-navbar-collapse">
+									<ul class="nav navbar-nav">';
 				 
 				for($i = 0; $i < count($menu); $i ++) {
 									$out .= '<li>
@@ -359,21 +360,11 @@
 								ORDER BY 
 									a.menu_arrange_sub";
 									
-						$res = $db->prepare($qry);
-						$res->execute(array($_SESSION["gid"],$menu[$i]["menu_id"]));
-						$menu_sub = $res->fetchAll();
-						//get as of data from mms--uls
-						$data_date = '';
-						$data_date2 = '';
+						$menu_sub = array();
 						try {
-							$date_of_updates='SELECT data_as_of as data_as_of,date_of_update as date_gen FROM date_of_updates';
-							$pre=$db->prepare($date_of_updates);
-							$pre->execute();
-							$result=$pre->fetchAll();
-							if (!empty($result)) {
-								$data_date=$result[0]["data_as_of"]; 				 
-								$data_date2=$result[0]["date_gen"];
-							}
+							$res = $db->prepare($qry);
+							$res->execute(array($_SESSION["gid"],$menu[$i]["menu_id"]));
+							$menu_sub = $res->fetchAll();
 						} catch (Throwable $e) {}
 												
 						for($j = 0; $j < count($menu_sub); $j ++) {
@@ -404,6 +395,10 @@
 					}
 										$out .= '</li>';
 				}
+				$out .=	'</ul>
+						</div>
+					</div>
+				</div>';
 			}						//$data_date=1;
 									$yr = !empty($data_date) ? substr(strval($data_date),0,2) : '';
 									$mon = !empty($data_date) ? substr(strval($data_date),2,2) : '';
@@ -431,28 +426,8 @@
 									//echo count($fets);
 									//echo "<p>max date:".$fets[0][0]."-</p>";
 										 										
-									$out .=	'</ul>
-										</div>
-									</div>
-								</div>
-								<!--<div class="date-conts" >
-									<i class="fa fa-user fa-fw"></i>
-									You are logged-in as: <strong>'.$_SESSION["uid"].'--'.count($result).'</strong>
-								</div>
-								<div class="date-conts" >
-									<i class="fa fa-calendar fa-fw"></i>
-									<strong>Date Now:'.date('F j, Y').'</strong>
-								</div>
-								<div class="date-conts">
-									<i class="fa fa-calendar fa-fw"></i>																		
-									<strong>Data as Of: '.date('F j,Y',strtotime($whole)).'</strong>
-								</div>
-								
-								<div class="date-conts">
-									<i class="fa fa-calendar fa-fw"></i>																		
-									<strong>Date of Updating CCN Portal Data : '.date('F j,Y',strtotime($whole2)).'</strong>
-								</div>-->
-								<div class="list-group">
+
+									$out .= '<div class="list-group">
 									<a class="list-group-item" style="background-color:#f5f5f5">You are logged-in as: <strong>'.($_SESSION["gid"]==1?"":$_SESSION['uid']).'</strong></a>
 									<a class="list-group-item">Date Now:<i class="fa fa-calendar fa-fw"></i> '.date('F j, Y').'</a>
 									<a class="list-group-item">Sales Accepted Until:<i class="fa fa-calendar fa-fw"></i> '.date('F j,Y',strtotime($whole)).'</a>
