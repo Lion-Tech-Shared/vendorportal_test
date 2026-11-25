@@ -130,7 +130,7 @@
 			unset($_SESSION['change_pwd']);
 			unset($_SESSION['id_expired']);
 		}
-		catch(PDOExecption $e) {
+		catch(PDOException $e) {
 			$db2->rollback();
 			$db2 = null;
 		}

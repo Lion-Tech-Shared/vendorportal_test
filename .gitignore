@@ -18,3 +18,7 @@ ehthumbs.db
 
 # Log files
 *.log
+
+# Local environment configuration (never commit credentials)
+*.local.php
+db_config.local.php

@@ -51,7 +51,7 @@ $(function(){
 
 	 var name='trigger';
 	 var results=new RegExp('[\?&]' + name +'=([^&#]*)').exec(window.location.href);	
-	 //getUrl = 0;
+	 var getUrl = 0;
 	 if(results){
 	 	 getUrl=results[1];
 	 }	
@@ -451,7 +451,7 @@ $(function(){
   		//alert($(this).attr("id"));
   });
 
-  if(getUrl){
+  if(typeof getUrl !== 'undefined' && getUrl){
 	 	$("#btn_find_adj").trigger("click");
   }
  

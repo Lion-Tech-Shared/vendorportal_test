@@ -1,4 +1,4 @@
-﻿<?PHP  
+<?PHP  
 	session_start();		
 	require_once "../class-main/connection.class.php";	
 	require_once "../panel/check_effect.php";
@@ -294,21 +294,28 @@
 					ORDER BY
 						a.menu_arrange ASC";
 						
-			$res = $db->prepare($qry);
-			$res->execute(array($_SESSION['gid']));
-			$menu = $res->fetchAll();
+			$menu = array();
+			try {
+				$res = $db->prepare($qry);
+				$res->execute(array($_SESSION['gid']));
+				$menu = $res->fetchAll();
+			} catch (Throwable $e) {
+				$menu = array();
+			}
 			//$out='<div class="alert alert-danger col-sm-12" align="center"  ><span class="fa fa-info-circle"></span>
             //   We will be having system maintenance on October 31,2015 from 9am-10am, the system is unavailable this period of time.
             //              </div>'; 
             $out='';
 
             //if($_SESSION['gid']!=5){
-            	$notice= $db->prepare("SELECT * FROM tbl_cm");
-				$notice->execute();
-				$notice_fetch = $notice->fetchAll();
-				if(trim($notice_fetch[0]['notice']) != ''){
-					$out.='<div class="alert alert-info col-sm-12" align="center"  ><span class="fa fa-info-circle fa-fw"></span>'.$notice_fetch[0]['notice'].'</div>';
-				}             	
+            	try {
+            		$notice= $db->prepare("SELECT * FROM tbl_cm");
+					$notice->execute();
+					$notice_fetch = $notice->fetchAll();
+					if(!empty($notice_fetch) && isset($notice_fetch[0]['notice']) && trim($notice_fetch[0]['notice']) != ''){
+						$out.='<div class="alert alert-info col-sm-12" align="center"  ><span class="fa fa-info-circle fa-fw"></span>'.$notice_fetch[0]['notice'].'</div>';
+					}
+            	} catch (Throwable $e) {}
             //}
 			if(count($menu) > 0) {
 				$out.=	'<div class="col-sm-3 ">
@@ -356,12 +363,18 @@
 						$res->execute(array($_SESSION["gid"],$menu[$i]["menu_id"]));
 						$menu_sub = $res->fetchAll();
 						//get as of data from mms--uls
-						$date_of_updates='SELECT data_as_of as data_as_of,date_of_update as date_gen FROM date_of_updates';
-						$pre=$db->prepare($date_of_updates);
-						$pre->execute();
-						$result=$pre->fetchAll();
-						$data_date=$result[0]["data_as_of"]; 				 
-						$data_date2=$result[0]["date_gen"];
+						$data_date = '';
+						$data_date2 = '';
+						try {
+							$date_of_updates='SELECT data_as_of as data_as_of,date_of_update as date_gen FROM date_of_updates';
+							$pre=$db->prepare($date_of_updates);
+							$pre->execute();
+							$result=$pre->fetchAll();
+							if (!empty($result)) {
+								$data_date=$result[0]["data_as_of"]; 				 
+								$data_date2=$result[0]["date_gen"];
+							}
+						} catch (Throwable $e) {}
 												
 						for($j = 0; $j < count($menu_sub); $j ++) {
 												$out .= '<li class="dropdown-submenu multi-level">												
@@ -392,15 +405,15 @@
 										$out .= '</li>';
 				}
 			}						//$data_date=1;
-									$yr=substr(strval($data_date),0,2);
-									$mon=substr(strval($data_date),2,2);
-									$day=substr(strval($data_date),4,2);
-									$whole=$mon.'/'.$day.'/'.$yr;
+									$yr = !empty($data_date) ? substr(strval($data_date),0,2) : '';
+									$mon = !empty($data_date) ? substr(strval($data_date),2,2) : '';
+									$day = !empty($data_date) ? substr(strval($data_date),4,2) : '';
+									$whole = ($yr && $mon && $day) ? $mon.'/'.$day.'/'.$yr : date('m/d/y');
 									//$data_date2=1;
-									$yr2=substr(strval($data_date2),0,2);
-									$mon2=substr(strval($data_date2),2,2);
-									$day2=substr(strval($data_date2),4,2);
-									$whole2=$mon2.'/'.$day2.'/'.$yr2;
+									$yr2 = !empty($data_date2) ? substr(strval($data_date2),0,2) : '';
+									$mon2 = !empty($data_date2) ? substr(strval($data_date2),2,2) : '';
+									$day2 = !empty($data_date2) ? substr(strval($data_date2),4,2) : '';
+									$whole2 = ($yr2 && $mon2 && $day2) ? $mon2.'/'.$day2.'/'.$yr2 : date('m/d/y');
 									
 									//get expiration of userid
 									$con=new getConnection();
@@ -446,9 +459,14 @@
 									
 									';
 									if($_SESSION["gid"]==1){
-										$out.='<a class="list-group-item">Last Update of DB :<i class="fa fa-calendar fa-fw"></i> '.date('F j,Y',strtotime($whole2)).'</a>';								}										$expiry=new check_if_expire();
-										
-										$out.='<a class="list-group-item">Your "Password" expires on:<i class="fa fa-calendar fa-fw"></i> '.$expiry->display_expiration().'</a>';
+										$out.='<a class="list-group-item">Last Update of DB :<i class="fa fa-calendar fa-fw"></i> '.date('F j,Y',strtotime($whole2)).'</a>';
+									}
+									$exp_display = '';
+									try {
+										$expiry=new check_if_expire();
+										$exp_display = $expiry->display_expiration();
+									} catch (Throwable $e) {}
+									$out.='<a class="list-group-item">Your "Password" expires on:<i class="fa fa-calendar fa-fw"></i> '.$exp_display.'</a>';
 						$out.='</div>';
 						if($_SESSION["gid"]==1){
 							/*$new=date("Y-m-d ");
